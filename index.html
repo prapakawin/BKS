@@ -1,3 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านบึงบ้านนำเกษตร</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:  #1a4731;
+      --green-mid:   #2d6a4f;
+      --green-light: #52b788;
+      --green-pale:  #d8f3dc;
+      --amber:       #f4a261;
+      --amber-dark:  #c77a3a;
+      --cream:       #fefae0;
+      --text-dark:   #1a2e1f;
+      --text-mid:    #3d5a44;
+      --text-light:  #6b8f72;
+      --card-bg:     #ffffff;
+      --shadow:      0 4px 24px rgba(26,71,49,0.10);
+      --shadow-hover:0 8px 36px rgba(26,71,49,0.18);
+    }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 10% 0%, rgba(82,183,136,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 100%, rgba(244,162,97,0.13) 0%, transparent 50%);
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--green-dark);
+      padding: 28px 24px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 14px,
+        rgba(255,255,255,0.025) 14px,
+        rgba(255,255,255,0.025) 15px
+      );
+    }
+    .header-icon {
+      font-size: 2.6rem;
+      display: block;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    header h1 {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+    header p {
+      color: var(--green-light);
+      font-size: 0.92rem;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ─── SEARCH BOX ─── */
+    .search-section {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      border: 1px solid rgba(82,183,136,0.15);
+    }
+    .search-section label {
+      display: block;
+      font-family: 'Mitr', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-bottom: 10px;
+    }
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+    #searchInput {
+      flex: 1;
+      padding: 12px 18px;
+      border: 2px solid var(--green-pale);
+      border-radius: 10px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+      background: #fafff8;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #searchInput:focus {
+      border-color: var(--green-light);
+      box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+    }
+    #searchInput::placeholder { color: #a8c8b0; }
+    #searchBtn {
+      padding: 12px 26px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Mitr', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    #searchBtn:hover {
+      background: var(--green-dark);
+      box-shadow: 0 4px 14px rgba(26,71,49,0.25);
+    }
+    #searchBtn:active { transform: scale(0.97); }
+
+    /* ─── RESULT INFO ─── */
+    .result-info {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-top: 10px;
+      min-height: 18px;
+      transition: opacity 0.3s;
+    }
+
+    /* ─── PRODUCT GRID ─── */
+    #productList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    /* ─── PRODUCT CARD ─── */
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 22px 20px 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(82,183,136,0.10);
+      transition: transform 0.22s, box-shadow 0.22s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.35s ease both;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .product-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green-light), var(--amber));
+      border-radius: 14px 14px 0 0;
+    }
+
+    .card-img {
+      width: 72px;
+      height: 72px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .card-name {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .card-price-label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+    .card-price {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--green-mid);
+    }
+    .card-price span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-left: 2px;
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 52px 20px;
+      animation: fadeUp 0.3s ease;
+    }
+    .empty-state .empty-icon { font-size: 3.5rem; display: block; margin-bottom: 14px; }
+    .empty-state p { color: var(--text-light); font-size: 1rem; line-height: 1.6; }
+    .empty-state strong { color: var(--text-mid); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }ุึ
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.82rem;
+      padding: 0 20px 30px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 500px) {
+      header h1 { font-size: 1.4rem; }
+      .search-row { flex-direction: column; }
+      #searchBtn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="header-icon">🌾</span>
+    <h1>ร้านบึงบ้านนำเกษตร</h1>
+    <p>จำหน่ายปุ๋ย ยา เมล็ดพันธุ์ข้าวโพด และอุปกรณ์การเกษตร โทร:0894468222</p>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <label for="searchInput">🔍 ค้นหาสินค้า</label>
+      <div class="search-row">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="พิมพ์ชื่อสินค้าที่ต้องการตรวจสอบราคา..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="searchBtn" onclick="doSearch()">ค้นหา</button>
+      </div>
+      <div class="result-info" id="resultInfo"></div>
+    </section>
+
+    <div id="productList"></div>
+  </main>
+
+  <footer>
+    <p>© 2567 ร้านบึงบ้านนำเกษตร · ติดต่อสอบถามโทร:0894468222 </p>
+  </footer>
+
+  <script>
+    // SVG corn image generator per brand color scheme
+    function cornSVG(kernelColor, leafColor, label) {
+      return `<svg class="card-img" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+        <!-- leaves -->
+        <path d="M36 52 Q18 44 14 28 Q26 30 36 52Z" fill="${leafColor}" opacity="0.9"/>
+        <path d="M36 52 Q54 44 58 28 Q46 30 36 52Z" fill="${leafColor}" opacity="0.75"/>
+        <path d="M36 58 Q20 54 16 38 Q28 42 36 58Z" fill="${leafColor}" opacity="0.6"/>
+        <path d="M36 58 Q52 54 56 38 Q44 42 36 58Z" fill="${leafColor}" opacity="0.5"/>
+        <!-- cob body -->
+        <ellipse cx="36" cy="30" rx="11" ry="18" fill="#f5deb3"/>
+        <ellipse cx="36" cy="30" rx="11" ry="18" fill="none" stroke="#c8a96e" stroke-width="0.8"/>
+        <!-- kernel rows -->
+        <g fill="${kernelColor}" stroke="#0003" stroke-width="0.3">
+          ${[...Array(5)].map((_,row) =>
+            [...Array(row%2===0?3:2)].map((_,col) => {
+              const cols = row%2===0?3:2;
+              const startX = 36 - (cols-1)*4 + col*8 + (row%2===0?0:4);
+              const y = 18 + row*5;
+              return `<ellipse cx="${startX}" cy="${y}" rx="3.2" ry="2.2"/>`;
+            }).join('')
+          ).join('')}
+        </g>
+        <!-- silk strands -->
+        <path d="M34 13 Q32 6 30 4" stroke="#d4a843" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M36 12 Q36 5 35 3" stroke="#e0b84a" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M38 13 Q40 6 42 4" stroke="#d4a843" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- brand label badge -->
+        <rect x="18" y="56" width="36" height="13" rx="6" fill="${kernelColor}" opacity="0.92"/>
+        <text x="36" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="700" fill="#fff">${label}</text>
+      </svg>`;
+    }
+
+    const BRANDS = {
+      'Pacific': { kernel: '#e67e22', leaf: '#27ae60', label: 'PACIFIC' },
+      'NK':      { kernel: '#2980b9', leaf: '#16a085', label: 'NK' },
+      'Dekalb':  { kernel: '#8e44ad', leaf: '#2c3e50', label: 'DeKalb' },
+      'Premier': { kernel: '#c0392b', leaf: '#27ae60', label: 'PREMIER' },
+      'GT':      { kernel: '#d35400', leaf: '#1abc9c', label: 'GT' },
+      'CP':      { kernel: '#c0392b', leaf: '#2ecc71', label: 'CP' },
+      'LG':      { kernel: '#f39c12', leaf: '#27ae60', label: 'LG' },
+    };
+
+    const products = [
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 339',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 789',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 289',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 995',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดNK 6848',      price: 1980, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดNK S7328',     price: 1990, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9259',  price: 2000, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9979',  price: 1990, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 7212',  price: 1820, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 365', price: 1780, brand: 'premier' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 737', price: 1900, brand: 'premier' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 600',       price: 2020, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 388',       price: 1950, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 722',       price: 1850, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดCP M26',       price: 1940, brand: 'cp' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดLG 608',       price: 1900, brand: 'lg' },
 
 <!DOCTYPE html>
 <html lang="th">
@@ -339,6 +679,62 @@
       { name: 'เมล็ดพันธุ์ข้าวโพด GT 722',       price: 1850, brand: 'gt' },
       { name: 'เมล็ดพันธุ์ข้าวโพด CP M26',       price: 1940, brand: 'cp' },
       { name: 'เมล็ดพันธุ์ข้าวโพด LG 608',       price: 1900, brand: 'lg' },
+    ];
+
+    function renderCards(list) {
+      const container = document.getElementById('productList');
+      const info      = document.getElementById('resultInfo');
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <span class="empty-icon">🔎</span>
+            <p>ไม่พบสินค้าที่ค้นหา<br>
+            ลองพิมพ์คำค้นหาใหม่อีกครั้ง</p>
+          </div>`;
+        info.textContent = 'ไม่พบสินค้า';
+        return;
+      }
+
+      container.innerHTML = list.map((p, i) => {
+        const b = BRANDS[p.brand];
+        return `
+        <div class="product-card" style="animation-delay:${i * 0.06}s">
+          ${cornSVG(b.kernel, b.leaf, b.label)}
+          <div class="card-name">${p.name}</div>
+          <div class="card-price-label">ราคา</div>
+          <div class="card-price">
+            ${p.price.toLocaleString()}<span>บาท</span>
+          </div>
+        </div>`;
+      }).join('');
+
+      info.textContent = `พบสินค้า ${list.length} รายการ`;
+    }
+
+    function doSearch() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const results = products.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.brand.toLowerCase().includes(q)
+      );
+      renderCards(results);
+    }
+
+    // ค้นหาแบบ real-time เมื่อพิมพ์
+    document.getElementById('searchInput').addEventListener('input', doSearch);
+
+    // กด Enter เพื่อค้นหา
+    document.getElementById('searchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    // แสดงสินค้าทั้งหมดตอนโหลดหน้า
+    renderCards(products);
+  </script>
+
+</body>
+</html>
     ];
 
     function renderCards(list) {
