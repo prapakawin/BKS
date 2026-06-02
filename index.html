@@ -263,7 +263,7 @@
         <input
           type="text"
           id="searchInput"
-          placeholder="พิมพ์ชื่อสินค้าที่ต้องการ..."
+          placeholder="พิมพ์ชื่อสินค้าที่ต้องการตรวจสอบราคา..."
           autocomplete="off"
           spellcheck="false"
         />
@@ -276,7 +276,7 @@
   </main>
 
   <footer>
-    <p>© 2567 ร้านบึงบ้านนำเกษตร · เมล็ดพันธุ์คุณภาพมาตรฐาน</p>
+    <p>©  ร้านบึงบ้านนำเกษตร · เมล็ดพันธุ์คุณภาพ</p>
   </footer>
 
   <script>
@@ -313,13 +313,13 @@
     }
 
     const BRANDS = {
-      'pacific': { kernel: '#e67e22', leaf: '#27ae60', label: 'PACIFIC' },
-      'nk':      { kernel: '#2980b9', leaf: '#16a085', label: 'NK' },
-      'dekalb':  { kernel: '#8e44ad', leaf: '#2c3e50', label: 'DeKalb' },
-      'premier': { kernel: '#c0392b', leaf: '#27ae60', label: 'PREMIER' },
-      'gt':      { kernel: '#d35400', leaf: '#1abc9c', label: 'GT' },
-      'cp':      { kernel: '#c0392b', leaf: '#2ecc71', label: 'CP' },
-      'lg':      { kernel: '#f39c12', leaf: '#27ae60', label: 'LG' },
+      'Pacific': { kernel: '#e67e22', leaf: '#27ae60', label: 'PACIFIC' },
+      'NK':      { kernel: '#2980b9', leaf: '#16a085', label: 'NK' },
+      'Dekalb':  { kernel: '#8e44ad', leaf: '#2c3e50', label: 'DeKalb' },
+      'Premier': { kernel: '#c0392b', leaf: '#27ae60', label: 'PREMIER' },
+      'GT':      { kernel: '#d35400', leaf: '#1abc9c', label: 'GT' },
+      'CP':      { kernel: '#c0392b', leaf: '#2ecc71', label: 'CP' },
+      'LG':      { kernel: '#f39c12', leaf: '#27ae60', label: 'LG' },
     };
 
     const products = [
@@ -327,18 +327,18 @@
       { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 789',  price: 1990, brand: 'pacific' },
       { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 289',  price: 1990, brand: 'pacific' },
       { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 995',  price: 1990, brand: 'pacific' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด NK 6848',      price: 1980, brand: 'nk' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด NK S7328',     price: 1990, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดNK 6848',      price: 1980, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดNK S7328',     price: 1990, brand: 'nk' },
       { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9259',  price: 2000, brand: 'dekalb' },
       { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9979',  price: 1990, brand: 'dekalb' },
       { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 7212',  price: 1820, brand: 'dekalb' },
       { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 365', price: 1780, brand: 'premier' },
       { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 737', price: 1900, brand: 'premier' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด GT 600',       price: 2020, brand: 'gt' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด GT 388',       price: 1950, brand: 'gt' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด GT 722',       price: 1850, brand: 'gt' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด CP M26',       price: 1940, brand: 'cp' },
-      { name: 'เมล็ดพันธุ์ข้าวโพด LG 608',       price: 1900, brand: 'lg' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 600',       price: 2020, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 388',       price: 1950, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดGT 722',       price: 1850, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดCP M26',       price: 1940, brand: 'cp' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดLG 608',       price: 1900, brand: 'lg' },
     ];
 
     function renderCards(list) {
