@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ร้านค้าเกษตรกร</title>
+  <title>ร้านบึงบ้านนำเกษตร</title>
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -180,8 +181,9 @@
       border-radius: 14px 14px 0 0;
     }
 
-    .card-emoji {
-      font-size: 2.2rem;
+    .card-img {
+      width: 72px;
+      height: 72px;
       display: block;
       margin-bottom: 10px;
     }
@@ -250,8 +252,8 @@
 
   <header>
     <span class="header-icon">🌾</span>
-    <h1>ร้านค้าเกษตรกร</h1>
-    <p>ปุ๋ย ยา และฮอร์โมนพืช คุณภาพดี</p>
+    <h1>ร้านบึงบ้านนำเกษตร</h1>
+    <p>เมล็ดพันธุ์ข้าวโพดคุณภาพ หลากหลายสายพันธุ์</p>
   </header>
 
   <main>
@@ -274,16 +276,69 @@
   </main>
 
   <footer>
-    <p>© 2567 ร้านค้าเกษตรกร · สินค้าทุกชนิดมีคุณภาพมาตรฐาน</p>
+    <p>© 2567 ร้านบึงบ้านนำเกษตร · เมล็ดพันธุ์คุณภาพมาตรฐาน</p>
   </footer>
 
   <script>
+    // SVG corn image generator per brand color scheme
+    function cornSVG(kernelColor, leafColor, label) {
+      return `<svg class="card-img" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+        <!-- leaves -->
+        <path d="M36 52 Q18 44 14 28 Q26 30 36 52Z" fill="${leafColor}" opacity="0.9"/>
+        <path d="M36 52 Q54 44 58 28 Q46 30 36 52Z" fill="${leafColor}" opacity="0.75"/>
+        <path d="M36 58 Q20 54 16 38 Q28 42 36 58Z" fill="${leafColor}" opacity="0.6"/>
+        <path d="M36 58 Q52 54 56 38 Q44 42 36 58Z" fill="${leafColor}" opacity="0.5"/>
+        <!-- cob body -->
+        <ellipse cx="36" cy="30" rx="11" ry="18" fill="#f5deb3"/>
+        <ellipse cx="36" cy="30" rx="11" ry="18" fill="none" stroke="#c8a96e" stroke-width="0.8"/>
+        <!-- kernel rows -->
+        <g fill="${kernelColor}" stroke="#0003" stroke-width="0.3">
+          ${[...Array(5)].map((_,row) =>
+            [...Array(row%2===0?3:2)].map((_,col) => {
+              const cols = row%2===0?3:2;
+              const startX = 36 - (cols-1)*4 + col*8 + (row%2===0?0:4);
+              const y = 18 + row*5;
+              return `<ellipse cx="${startX}" cy="${y}" rx="3.2" ry="2.2"/>`;
+            }).join('')
+          ).join('')}
+        </g>
+        <!-- silk strands -->
+        <path d="M34 13 Q32 6 30 4" stroke="#d4a843" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M36 12 Q36 5 35 3" stroke="#e0b84a" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M38 13 Q40 6 42 4" stroke="#d4a843" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- brand label badge -->
+        <rect x="18" y="56" width="36" height="13" rx="6" fill="${kernelColor}" opacity="0.92"/>
+        <text x="36" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="700" fill="#fff">${label}</text>
+      </svg>`;
+    }
+
+    const BRANDS = {
+      'pacific': { kernel: '#e67e22', leaf: '#27ae60', label: 'PACIFIC' },
+      'nk':      { kernel: '#2980b9', leaf: '#16a085', label: 'NK' },
+      'dekalb':  { kernel: '#8e44ad', leaf: '#2c3e50', label: 'DeKalb' },
+      'premier': { kernel: '#c0392b', leaf: '#27ae60', label: 'PREMIER' },
+      'gt':      { kernel: '#d35400', leaf: '#1abc9c', label: 'GT' },
+      'cp':      { kernel: '#c0392b', leaf: '#2ecc71', label: 'CP' },
+      'lg':      { kernel: '#f39c12', leaf: '#27ae60', label: 'LG' },
+    };
+
     const products = [
-      { name: 'ปุ๋ยยูเรีย',      price: 780,  emoji: '🧪', category: 'ปุ๋ย' },
-      { name: 'ปุ๋ย 16-20-0',    price: 850,  emoji: '🌿', category: 'ปุ๋ย' },
-      { name: 'ยาฆ่าแมลง A',    price: 320,  emoji: '🪲', category: 'ยา' },
-      { name: 'ยากำจัดหญ้า B',  price: 450,  emoji: '🌱', category: 'ยา' },
-      { name: 'ฮอร์โมนพืช C',   price: 290,  emoji: '💧', category: 'ฮอร์โมน' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 339',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 789',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 289',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดแปซิฟิค 995',  price: 1990, brand: 'pacific' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด NK 6848',      price: 1980, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด NK S7328',     price: 1990, brand: 'nk' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9259',  price: 2000, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 9979',  price: 1990, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดดีคาล์บ 7212',  price: 1820, brand: 'dekalb' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 365', price: 1780, brand: 'premier' },
+      { name: 'เมล็ดพันธุ์ข้าวโพดพรีเมียร์ 737', price: 1900, brand: 'premier' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด GT 600',       price: 2020, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด GT 388',       price: 1950, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด GT 722',       price: 1850, brand: 'gt' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด CP M26',       price: 1940, brand: 'cp' },
+      { name: 'เมล็ดพันธุ์ข้าวโพด LG 608',       price: 1900, brand: 'lg' },
     ];
 
     function renderCards(list) {
@@ -301,16 +356,18 @@
         return;
       }
 
-      container.innerHTML = list.map((p, i) => `
+      container.innerHTML = list.map((p, i) => {
+        const b = BRANDS[p.brand];
+        return `
         <div class="product-card" style="animation-delay:${i * 0.06}s">
-          <span class="card-emoji">${p.emoji}</span>
+          ${cornSVG(b.kernel, b.leaf, b.label)}
           <div class="card-name">${p.name}</div>
           <div class="card-price-label">ราคา</div>
           <div class="card-price">
             ${p.price.toLocaleString()}<span>บาท</span>
           </div>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
 
       info.textContent = `พบสินค้า ${list.length} รายการ`;
     }
@@ -319,7 +376,7 @@
       const q = document.getElementById('searchInput').value.trim().toLowerCase();
       const results = products.filter(p =>
         p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q)
+        p.brand.toLowerCase().includes(q)
       );
       renderCards(results);
     }
