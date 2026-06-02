@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านค้าเกษตรกร</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:  #1a4731;
+      --green-mid:   #2d6a4f;
+      --green-light: #52b788;
+      --green-pale:  #d8f3dc;
+      --amber:       #f4a261;
+      --amber-dark:  #c77a3a;
+      --cream:       #fefae0;
+      --text-dark:   #1a2e1f;
+      --text-mid:    #3d5a44;
+      --text-light:  #6b8f72;
+      --card-bg:     #ffffff;
+      --shadow:      0 4px 24px rgba(26,71,49,0.10);
+      --shadow-hover:0 8px 36px rgba(26,71,49,0.18);
+    }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 10% 0%, rgba(82,183,136,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 100%, rgba(244,162,97,0.13) 0%, transparent 50%);
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--green-dark);
+      padding: 28px 24px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 14px,
+        rgba(255,255,255,0.025) 14px,
+        rgba(255,255,255,0.025) 15px
+      );
+    }
+    .header-icon {
+      font-size: 2.6rem;
+      display: block;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    header h1 {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+    header p {
+      color: var(--green-light);
+      font-size: 0.92rem;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ─── SEARCH BOX ─── */
+    .search-section {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      border: 1px solid rgba(82,183,136,0.15);
+    }
+    .search-section label {
+      display: block;
+      font-family: 'Mitr', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-bottom: 10px;
+    }
+    .search-row {
+      display: flex;
+      gap: 10px;
+    }
+    #searchInput {
+      flex: 1;
+      padding: 12px 18px;
+      border: 2px solid var(--green-pale);
+      border-radius: 10px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+      background: #fafff8;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #searchInput:focus {
+      border-color: var(--green-light);
+      box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+    }
+    #searchInput::placeholder { color: #a8c8b0; }
+    #searchBtn {
+      padding: 12px 26px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Mitr', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    #searchBtn:hover {
+      background: var(--green-dark);
+      box-shadow: 0 4px 14px rgba(26,71,49,0.25);
+    }
+    #searchBtn:active { transform: scale(0.97); }
+
+    /* ─── RESULT INFO ─── */
+    .result-info {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-top: 10px;
+      min-height: 18px;
+      transition: opacity 0.3s;
+    }
+
+    /* ─── PRODUCT GRID ─── */
+    #productList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    /* ─── PRODUCT CARD ─── */
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 22px 20px 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(82,183,136,0.10);
+      transition: transform 0.22s, box-shadow 0.22s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.35s ease both;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .product-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green-light), var(--amber));
+      border-radius: 14px 14px 0 0;
+    }
+
+    .card-emoji {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .card-name {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .card-price-label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+    .card-price {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--green-mid);
+    }
+    .card-price span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-left: 2px;
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 52px 20px;
+      animation: fadeUp 0.3s ease;
+    }
+    .empty-state .empty-icon { font-size: 3.5rem; display: block; margin-bottom: 14px; }
+    .empty-state p { color: var(--text-light); font-size: 1rem; line-height: 1.6; }
+    .empty-state strong { color: var(--text-mid); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.82rem;
+      padding: 0 20px 30px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 500px) {
+      header h1 { font-size: 1.4rem; }
+      .search-row { flex-direction: column; }
+      #searchBtn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="header-icon">🌾</span>
+    <h1>ร้านค้าเกษตรกร</h1>
+    <p>ปุ๋ย ยา และฮอร์โมนพืช คุณภาพดี</p>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <label for="searchInput">🔍 ค้นหาสินค้า</label>
+      <div class="search-row">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="พิมพ์ชื่อสินค้าที่ต้องการ..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="searchBtn" onclick="doSearch()">ค้นหา</button>
+      </div>
+      <div class="result-info" id="resultInfo"></div>
+    </section>
+
+    <div id="productList"></div>
+  </main>
+
+  <footer>
+    <p>© 2567 ร้านค้าเกษตรกร · สินค้าทุกชนิดมีคุณภาพมาตรฐาน</p>
+  </footer>
+
+  <script>
+    const products = [
+      { name: 'ปุ๋ยยูเรีย',      price: 780,  emoji: '🧪', category: 'ปุ๋ย' },
+      { name: 'ปุ๋ย 16-20-0',    price: 850,  emoji: '🌿', category: 'ปุ๋ย' },
+      { name: 'ยาฆ่าแมลง A',    price: 320,  emoji: '🪲', category: 'ยา' },
+      { name: 'ยากำจัดหญ้า B',  price: 450,  emoji: '🌱', category: 'ยา' },
+      { name: 'ฮอร์โมนพืช C',   price: 290,  emoji: '💧', category: 'ฮอร์โมน' },
+    ];
+
+    function renderCards(list) {
+      const container = document.getElementById('productList');
+      const info      = document.getElementById('resultInfo');
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <span class="empty-icon">🔎</span>
+            <p>ไม่พบสินค้าที่ค้นหา<br>
+            ลองพิมพ์คำค้นหาใหม่อีกครั้ง</p>
+          </div>`;
+        info.textContent = 'ไม่พบสินค้า';
+        return;
+      }
+
+      container.innerHTML = list.map((p, i) => `
+        <div class="product-card" style="animation-delay:${i * 0.06}s">
+          <span class="card-emoji">${p.emoji}</span>
+          <div class="card-name">${p.name}</div>
+          <div class="card-price-label">ราคา</div>
+          <div class="card-price">
+            ${p.price.toLocaleString()}<span>บาท</span>
+          </div>
+        </div>
+      `).join('');
+
+      info.textContent = `พบสินค้า ${list.length} รายการ`;
+    }
+
+    function doSearch() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const results = products.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+      );
+      renderCards(results);
+    }
+
+    // ค้นหาแบบ real-time เมื่อพิมพ์
+    document.getElementById('searchInput').addEventListener('input', doSearch);
+
+    // กด Enter เพื่อค้นหา
+    document.getElementById('searchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    // แสดงสินค้าทั้งหมดตอนโหลดหน้า
+    renderCards(products);
+  </script>
+
+</body>
+</html>
